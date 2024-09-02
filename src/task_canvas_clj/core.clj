@@ -28,7 +28,6 @@
 
 (defn- delete-todo
   [todo-id] (let [path (str "http://localhost:8080/v1/todos/" todo-id)]
-              (println path)
               (try (client/delete path)
                    (catch Exception e
                      (println e)
