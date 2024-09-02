@@ -5,7 +5,8 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [faker "0.3.2"]
-                 [clj-http "3.13.0"]]
+                 [clj-http "3.13.0"]
+                 [cheshire "5.13.0"]]
   :main ^:skip-aot task-canvas-clj.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
