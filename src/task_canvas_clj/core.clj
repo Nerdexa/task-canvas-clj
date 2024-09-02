@@ -53,7 +53,6 @@
 
 (defn- delete-all-todos
   [] (let [todo-ids (get-todo-ids)]
-       (println todo-ids)
        (doseq [todo-id todo-ids]
          (delete-todo todo-id))
        (println (str "Deleted all todos"))))
