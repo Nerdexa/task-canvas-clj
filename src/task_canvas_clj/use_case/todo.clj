@@ -18,3 +18,7 @@
     (doseq [todo todos]
       (task-canvas-port/post-todo task-canvas-driver todo))
     nil))
+
+(defn get-todos
+  [{:keys [task-canvas-driver]}]
+  (task-canvas-port/get-todos task-canvas-driver))
