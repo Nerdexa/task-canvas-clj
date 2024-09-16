@@ -4,6 +4,7 @@
             [mockfn.matchers :as matcher]
             [task-canvas-clj.port.task-canvas :as task-canvas-port]
             [task-canvas-clj.use-case.todo :as sut]))
+(require 'matcher-combinators.test)
 
 (t/deftest store-todo-test
   (t/testing "todoの登録"
@@ -13,3 +14,11 @@
         (mockfn/verifying
          [(task-canvas-port/post-todo :task-canvas-driver' todo) nil (matcher/exactly 20)]
          (t/is (= nil (sut/store-todo deps))))))))
+
+(t/deftest get-todos-test
+  (t/testing "todosの全権取得"
+    (let [deps {:task-canvas-driver :task-canvas-driver'}
+          todos {:todos [{:id "id" :content "content" :completed false}]}]
+      (mockfn/verifying
+       [(task-canvas-port/get-todos :task-canvas-driver') todos (matcher/exactly 1)]
+       (t/is (match? todos (sut/get-todos deps)))))))
