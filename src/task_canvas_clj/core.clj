@@ -42,7 +42,8 @@
 
 (def task-canvas-driver
   (reify task-canvas-port/TaskCanvasApiPort
-    (post-todo [_ todo] (task-canvas-driver/post-todo todo))))
+    (post-todo [_ todo] (task-canvas-driver/post-todo todo))
+    (get-todos [_] (task-canvas-driver/get-todos))))
 
 (defn -main
   "todo-canvas-api command line interface"
@@ -50,7 +51,7 @@
   (let [command (first args)]
     (case command
       "ping" (system-ping)
-      "get-todos" (println (get-todos))
+      "get-todos" (println (task-canvas-usecase/get-todos {:task-canvas-driver task-canvas-driver}))
       "create-todos" (task-canvas-usecase/store-todo {:task-canvas-driver task-canvas-driver})
       "delete-all-todos" (delete-all-todos)
       (println "Invalid command"))))
