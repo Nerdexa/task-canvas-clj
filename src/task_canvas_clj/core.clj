@@ -52,4 +52,5 @@
       "ping" (system-ping)
       "get-todos" (println (get-todos))
       "create-todos" (task-canvas-usecase/store-todo {:task-canvas-driver task-canvas-driver})
-      "delete-all-todos" (delete-all-todos))))
+      "delete-all-todos" (delete-all-todos)
+      (println "Invalid command"))))
