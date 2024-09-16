@@ -5,10 +5,8 @@
    [cheshire.core :as json]
    [task-canvas-clj.port.task-canvas :as task-canvas-port]
    [task-canvas-clj.driver.task-canvas :as task-canvas-driver]
-   [task-canvas-clj.use-case.todo :as task-canvas-usecase]))
-
-(defn- system-ping
-  [] (println "pong"))
+   [task-canvas-clj.use-case.todo :as task-canvas-usecase]
+   [task-canvas-clj.use-case.system :as task-canvas-system]))
 
 (defn- delete-todo
   [todo-id] (let [path (str "http://localhost:8080/v1/todos/" todo-id)]
@@ -50,7 +48,7 @@
   [& args]
   (let [command (first args)]
     (case command
-      "ping" (system-ping)
+      "ping" (task-canvas-clj.use-case.system/system-ping)
       "get-todos" (println (task-canvas-usecase/get-todos {:task-canvas-driver task-canvas-driver}))
       "create-todos" (task-canvas-usecase/store-todo {:task-canvas-driver task-canvas-driver})
       "delete-all-todos" (delete-all-todos)
