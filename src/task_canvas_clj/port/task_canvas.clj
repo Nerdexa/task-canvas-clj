@@ -3,4 +3,4 @@
 (defprotocol TaskCanvasApiPort
   (post-todo [this todo])
   (get-todos [this])
-  (delete-all-todos [this]))
+  (delete-todo [this todo-id]))
