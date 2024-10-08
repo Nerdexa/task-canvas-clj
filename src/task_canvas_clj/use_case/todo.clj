@@ -14,26 +14,28 @@
                             :completed (generate-fake-completed)})))
 
 (defn store-todo
-  [{:keys [task-canvas-driver]}]
+  [{:keys [task-canvas-driver]} authorization]
   (let [todos (generate-faker-todos 20)]
     (doseq [todo todos]
-      (task-canvas-port/post-todo task-canvas-driver todo))
+      (task-canvas-port/post-todo task-canvas-driver todo authorization))
     nil))
 
 (defn get-todos
-  [{:keys [task-canvas-driver]}]
-  (task-canvas-port/get-todos task-canvas-driver))
+  [{:keys [task-canvas-driver]} authorization]
+  (task-canvas-port/get-todos task-canvas-driver authorization))
 
 (defn delete-all
-  [{:keys [task-canvas-driver]}]
+  [{:keys [task-canvas-driver]} authorization]
   (try
-    (let [res-todos (task-canvas-port/get-todos task-canvas-driver)
-          ->parse-json (json/parse-string res-todos true)
+    (let [res-todos (task-canvas-port/get-todos task-canvas-driver authorization)
+          ->parse-json (if (string? res-todos)
+                         (json/parse-string res-todos true)
+                         res-todos)
           todos (:todos ->parse-json)]
       (if (seq todos)
         (doseq [id (map :id todos)]
           (try
-            (task-canvas-port/delete-todo task-canvas-driver id)
+            (task-canvas-port/delete-todo task-canvas-driver id authorization)
             (catch Exception e
               (println (str "Failed to delete todo with id: " id ", error: " (.getMessage e))))))
         (println "No todos found to delete.")))
